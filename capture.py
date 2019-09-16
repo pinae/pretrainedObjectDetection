@@ -7,8 +7,13 @@ class FrameReadError(Exception):
 
 
 class WebCam:
+    def __init__(self):
+        self.capture_device = None
+        self.__enter__()
+
     def __enter__(self):
-        self.capture_device = cv2.VideoCapture(0)
+        if not self.capture_device:
+            self.capture_device = cv2.VideoCapture(0)
         if not self.capture_device.isOpened():
             self.capture_device.open()
         return self
