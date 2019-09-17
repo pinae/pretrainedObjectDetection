@@ -27,4 +27,5 @@ def convert_keras_model(model):
 
 if __name__ == "__main__":
     quantized_model = convert_keras_model(get_model())
-    print(type(quantized_model))
+    with open("david.tflite", 'bw') as model_file:
+        model_file.write(quantized_model)

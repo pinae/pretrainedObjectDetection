@@ -5,13 +5,17 @@ import cv2
 import os
 
 
-def inference(model, frame):
-    input_data = prepare_input(frame)
-    predictions = goliath.predict(input_data)
+def print_predictions(predictions):
     decoded_predictions = decode_predictions(predictions, top=3)[0]
     print('Predicted:')
     for i in range(3):
         print("  %d: %s - %.2f" % (i, decoded_predictions[i][1], decoded_predictions[i][2]))
+
+
+def inference(model, frame):
+    input_data = prepare_input(frame)
+    predictions = model.predict(input_data)
+    decode_predictions(predictions)
 
 
 if __name__ == "__main__":
