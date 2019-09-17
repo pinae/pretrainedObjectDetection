@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from model import get_model, prepare_input, decode_predictions
+from model import get_model, prepare_input, decode_predictions, export_saved_model
 from capture import WebCam
 import cv2
+import os
 
 
 def inference(model, frame):
@@ -15,6 +16,8 @@ def inference(model, frame):
 
 if __name__ == "__main__":
     goliath = get_model()
+    if not os.path.exists("goliath"):
+        export_saved_model(goliath, "goliath")
     with WebCam() as camera:
         while True:
             frame = camera.get_frame()
