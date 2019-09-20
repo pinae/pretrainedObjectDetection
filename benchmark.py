@@ -51,15 +51,15 @@ if __name__ == "__main__":
     print("Validating Goliath with tflite:")
     goliath = tf.lite.Interpreter(model_path="goliath.tflite")
     goliath.allocate_tensors()
-    benchmark(dataset.take(5), inference_keras, goliath)  # burn in
-    accuracy, avg_inference_time = benchmark(dataset.batch(10).take(100), inference_tflite, goliath)
+    benchmark(dataset.take(5), inference_tflite, goliath)  # burn in
+    accuracy, avg_inference_time = benchmark(dataset, inference_tflite, goliath)
     print("Accuracy: %.2f - Average inference time: %.2f" %
           (accuracy, avg_inference_time))
     print("------------------------------------------")
     print("Validating David with tflite:")
     david = tf.lite.Interpreter(model_path="david.tflite")
     david.allocate_tensors()
-    benchmark(dataset.take(5), inference_keras, david)  # burn in
+    benchmark(dataset.take(5), inference_tflite, david)  # burn in
     accuracy, avg_inference_time = benchmark(dataset, inference_tflite, david)
     print("Accuracy: %.2f - Average inference time: %.2f" %
           (accuracy, avg_inference_time))
