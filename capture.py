@@ -15,7 +15,7 @@ class WebCam:
         if not self.capture_device:
             self.capture_device = cv2.VideoCapture(0)
         if not self.capture_device.isOpened():
-            self.capture_device.open()
+            self.capture_device.open(0)
         return self
 
     def get_frame(self):
