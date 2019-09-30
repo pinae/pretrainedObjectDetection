@@ -39,13 +39,13 @@ def benchmark(dataset, inference_function, *args):
 if __name__ == "__main__":
     with open("ILSVRC2012_labels_map.json", 'r') as class_index_file:
         ilsverc2012_class_index = json.load(class_index_file)
-    dataset = get_dataset()
+    dataset = get_dataset().take(200)
     if False:
         print("Validating Goliath with Keras:")
         goliath = get_model()
         benchmark(dataset.take(5), inference_keras, goliath)  # burn in
         accuracy, avg_inference_time = benchmark(dataset, inference_keras, goliath)
-        print("Accuracy: %.2f - Average inference time: %.2f" %
+        print("Accuracy: %.6f - Average inference time: %.2f" %
               (accuracy, avg_inference_time))
         print("------------------------------------------")
     print("Validating Goliath with tflite:")
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     goliath.allocate_tensors()
     benchmark(dataset.take(5), inference_tflite, goliath)  # burn in
     accuracy, avg_inference_time = benchmark(dataset, inference_tflite, goliath)
-    print("Accuracy: %.2f - Average inference time: %.2f" %
+    print("Accuracy: %.6f - Average inference time: %.2f" %
           (accuracy, avg_inference_time))
     print("------------------------------------------")
     print("Validating David with tflite:")
@@ -61,5 +61,5 @@ if __name__ == "__main__":
     david.allocate_tensors()
     benchmark(dataset.take(5), inference_tflite, david)  # burn in
     accuracy, avg_inference_time = benchmark(dataset, inference_tflite, david)
-    print("Accuracy: %.2f - Average inference time: %.2f" %
+    print("Accuracy: %.6f - Average inference time: %.2f" %
           (accuracy, avg_inference_time))

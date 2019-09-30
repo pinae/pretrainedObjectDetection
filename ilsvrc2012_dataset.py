@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from tensorflow.data import Dataset
-from tensorflow import uint32, uint8, TensorShape
+import tensorflow as tf
 from model import prepare_input
 import os
 import cv2
@@ -22,10 +21,10 @@ def data_generator():
 
 
 def get_dataset():
-    return Dataset.from_generator(
+    return tf.data.Dataset.from_generator(
            data_generator,
-           output_types=(uint8, uint32),
-           output_shapes=(TensorShape([299, 299, 3]), TensorShape([])))
+           output_types=(tf.uint8, tf.uint32),
+           output_shapes=(tf.TensorShape([299, 299, 3]), tf.TensorShape([])))
 
 
 def get_representative_data():
