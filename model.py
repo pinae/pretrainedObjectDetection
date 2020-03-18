@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.applications.inception_v3 import decode_predictions, preprocess_input
-from tensorflow.keras.experimental import export_saved_model
+from tensorflow.keras.applications.inception_v3 import preprocess_input, decode_predictions
 from cv2 import resize, INTER_AREA
 import numpy as np
 

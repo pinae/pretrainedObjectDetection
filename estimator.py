@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
-from model import get_model, prepare_input, decode_predictions, export_saved_model
+from model import get_model, prepare_input, decode_predictions
+import tensorflow as tf
 from capture import WebCam
 from time import time
 import cv2
 import os
+from gpu_helpers import init_all_gpu
+init_all_gpu()
 
 
 def print_predictions(predictions):
@@ -22,7 +25,7 @@ def inference(model, frame):
 if __name__ == "__main__":
     goliath = get_model()
     if not os.path.exists("goliath"):
-        export_saved_model(goliath, "goliath")
+        tf.saved_model.save(goliath, "goliath")
     with WebCam() as camera:
         while True:
             frame = camera.get_frame()

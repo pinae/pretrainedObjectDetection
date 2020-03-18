@@ -11,8 +11,11 @@ def data_generator():
     with open(os.path.join(dataset_dir, "ILSVRC2012_validation_ground_truth.txt"), 'r') as f:
         labels = f.readlines()
     while i < len(labels):
-        img_filename = "ILSVRC2012_val_000%05d.JPEG" % (i + 1)
+        img_filename = "ILSVRC2012_val_000{0:05d}.JPEG".format(i + 1)
         img_path = os.path.join(dataset_dir, "images", img_filename)
+        if not os.path.isfile(img_path):
+            print("Wrong path for the images! Are they in ../../Datasets/ILSVRC2012/images/?")
+            return
         img = cv2.imread(img_path, cv2.IMREAD_COLOR)
         img = cv2.resize(img, dsize=(299, 299), interpolation=cv2.INTER_AREA)
         label = int(labels[i])

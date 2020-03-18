@@ -21,11 +21,14 @@ rid of errors when `pip` needs to compile packages:
 pip install -U pip wheel
 ```
 
-This project uses TensorFlow 2.0 which is still a release candidate. 
-To install it use the following command:
+This project uses TensorFlow 2.0. To date TensorFlow is only 
+compatible to Python up to Version 3.7. Consider this if your
+sytem Python is already 3.8.
+  
+To install Tensorflow use the following command:
 
 ```shell script
-pip install setuptools==41.2.0 tensorflow==2.0.0-rc0
+pip install setuptools tensorflow
 ```
 
 This also installs a newer version of setuptools.
@@ -34,4 +37,65 @@ To access the webcam this project uses OpenCV:
 
 ```shell script
 pip install opencv-python
+```
+
+## Tests and preparation
+
+Test the Webcam with:
+
+```shell script
+python capture.py
+```
+
+Test your ILSVRC2012 Dataset installation. It is expected to live 
+in `../../Datasets/ILSVRC2012/` (images in the subfolder `images/`):
+
+```shell script
+python ilsvrc2012_dataset.py
+```
+
+Make sure you have a JSON version of the labels. You can create the file 
+from the `meta.mat` file in the ImageNet Dataset distribution with the
+following script:
+
+```shell script
+python convert_ilsvrc2012_labels.py
+```
+
+## Running
+
+Test the network as Keras Model with fp32:
+
+```shell script
+python estimator.py
+```
+
+Convert it to a tfLite Model:
+
+```shell script
+python convert_to_tflite.py
+```
+
+Run the big network with tfLite instead of Keras:
+
+```shell script
+python tflite_estimator.py
+```
+
+Now you can quantize it to int8:
+
+```shell script
+python quantize.py
+```
+
+Run the quantized network with images from your webcam:
+
+```shell script
+python quantized_estimator.py
+```
+
+Benchmark the big network (fp32) versus the quantized one (int8):
+
+```shell script
+python benchmark.py
 ```
